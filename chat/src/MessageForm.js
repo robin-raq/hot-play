@@ -5,7 +5,7 @@ export default class MessageForm extends Component {
         return (
             <form>
             <input type="text"/>
-            <input type="submit" value = "Let's Chat" />
+            <input type="submit" value = "Say it!" />
 
             </form>
         )

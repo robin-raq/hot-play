@@ -10,11 +10,13 @@ class Sidebar extends React.Component{
         return(
             <div className = 'sidebar'>
                 <h2>
-                    Hello from Sidebar!
+                    HotPlay!
                 </h2>
                 <Profile 
                     username = {this.props.user.username} imageUrl ={this.props.user.profile_picture}/>
-                <ChannelList channels = {this.props.channelNames}/>
+                <ChannelList 
+                    onNewChannel ={this.props.onNewChannel}
+                    onChangeChannel = {this.props.onChangeChannel}channels = {this.props.channelNames}/>
 
             </div>
         )
