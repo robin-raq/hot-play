@@ -12,8 +12,9 @@ class Sidebar extends React.Component{
                 <h2>
                     Hello from Sidebar!
                 </h2>
-                <Profile/>
-                <ChannelList/>
+                <Profile 
+                    username = {this.props.user.username} imageUrl ={this.props.user.profile_picture}/>
+                <ChannelList channels = {this.props.channelNames}/>
 
             </div>
         )
