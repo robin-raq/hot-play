@@ -33,6 +33,34 @@ class App extends React.Component{
     })
 
   }
+
+  handleNewMessage =(messageText) =>{
+    //console.log(messageText)
+    const newMessage = {
+      user: data.current_user,
+      content:{
+        text: messageText
+      }
+    }
+
+    const updatedChannel = {...this.state.currentChannel, messages: [...this.state.currentChannel.messages, newMessage] }
+
+    const updatedChannels = this.state.channels.map(channel => {
+      if (channel.name === updatedChannel.name){
+        return updatedChannel
+      } else {
+        return channel
+      }
+    } )
+
+    this.setState({
+      currentChannel: updatedChannel,
+      channels: updatedChannels
+
+
+    })
+
+  }
   render(){
     const channelNames = this.state.channels.map(channelObj => channelObj.name)
     return (
@@ -47,9 +75,11 @@ class App extends React.Component{
           channelNames = {channelNames}
 
             />
-        <Chat channel = {this.state.currentChannel}/>
+        <Chat 
+          onNewMessage = {this.handleNewMessage}
+          channel = {this.state.currentChannel}/>
 
-        <Recommended/> 
+        <Recommended channel = {this.state.currentChannel.name}/> 
         
 
         

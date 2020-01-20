@@ -5,7 +5,7 @@ export default class Recommended extends Component {
         return (
             <div className = "recommended">
                 <h2>
-                    Daily Recommendations
+                    {this.props.channel} top 5 
                 </h2>
             
                 
