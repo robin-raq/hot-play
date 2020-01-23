@@ -8,8 +8,27 @@ import Recommended from './Recommended'
 class App extends React.Component{
   state = {
     initialData: data,
-    channels: data.channels,
-    currentChannel: data.channels[3]
+    channels: [],
+    currentChannel: {
+      messages: []
+    },
+    currentUser: {}
+  }
+
+  componentDidMount(){
+    fetch("http://localhost:3000/current_user")
+    .then(r => r.json())
+    .then((currentUser) => {
+      //console.log(currentUser)
+      this.setState({currentUser: currentUser})
+    })
+    fetch("http://localhost:3000/channels")
+    .then(r => r.json())
+    .then((channels) => {
+      //console.log(currentUser)
+      this.setState({channels: channels, currentChannel: channels[1]})
+    })
+
   }
 
   handleNewChannel = (channelName) =>{
@@ -19,8 +38,21 @@ class App extends React.Component{
       messages: []
 
     }
-    this.setState({ 
-      channels: [...this.state.channels, newChannel]
+    fetch(`http://localhost:3000/channels`, {
+      method:'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(
+        newChannel
+      )
+    })
+    .then(resp => resp.json())
+    .then(newServerChannel => {
+      this.setState({ 
+      channels: [...this.state.channels, newServerChannel]})
+    
     })
 
   }
@@ -37,7 +69,7 @@ class App extends React.Component{
   handleNewMessage =(messageText) =>{
     //console.log(messageText)
     const newMessage = {
-      user: data.current_user,
+      user: this.state.currentUser,
       content:{
         text: messageText
       }
@@ -45,24 +77,50 @@ class App extends React.Component{
 
     const updatedChannel = {...this.state.currentChannel, messages: [...this.state.currentChannel.messages, newMessage] }
 
-    const updatedChannels = this.state.channels.map(channel => {
-      if (channel.name === updatedChannel.name){
-        return updatedChannel
-      } else {
-        return channel
-      }
-    } )
+    fetch(`http://localhost:3000/channels/${updatedChannel.id}`, {
+      method:'PATCH',
+      headers: { 
+        'Content-type': 'application/json',
+        'accept': 'application/json'
+      },
+      body: JSON.stringify(updatedChannel)
+      })
+      .then(resp => resp.json())
+      .then(updatedServerChannel => {
+        //console.log(json_resp)
+        const updatedChannels = this.state.channels.map(channel => {
+          if (channel.name === updatedServerChannel.name){
+            return updatedServerChannel
+          } else {
+            return channel
+          }
+        } )
+    
+        this.setState({
+          currentChannel: updatedServerChannel,
+          channels: updatedChannels
+    
+    
+        })
+      })
 
-    this.setState({
-      currentChannel: updatedChannel,
-      channels: updatedChannels
-
-
-    })
 
   }
+  
   render(){
     const channelNames = this.state.channels.map(channelObj => channelObj.name)
+    //condition render to setup login
+    if(!this.state.currentUser.id){
+      return <div>
+      <h1>Please Log In</h1>
+      <form>
+        <input type = "text" placeholder = "name"/>
+        <input type = "text" placeholder = "password"/>
+        <input type = "submit" value ="login"/>
+      </form>
+      </div>
+    }
+    
     return (
 
       <div className = "container">
@@ -71,7 +129,7 @@ class App extends React.Component{
           onNewChannel = {this.handleNewChannel}
 
           onChangeChannel ={this.handleChangeChannel}
-          user = {this.state.initialData.current_user}
+          user = {this.state.currentUser}
           channelNames = {channelNames}
 
             />
