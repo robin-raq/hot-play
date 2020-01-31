@@ -1,16 +1,16 @@
 import React from 'react';
-// import {Switch, Route } from 'react-router-dom';
+import {Switch, Route } from 'react-router-dom';
 import './App.css';
 // import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar';
 import Chat from './components/Chat';
-import data from './data';
+
 import Recommended from './Recommended';
 import LoginPage from './components/LoginPage'
+import SignupPage from './components/SignupPage'
 
 class App extends React.Component{
   state = {
-    initialData: data,
     channels: [],
     page:'profile',
     currentChannel: {
@@ -146,6 +146,21 @@ class App extends React.Component{
     })
 
   }
+
+  handleNewSignup =(userObj) =>{
+    //console.log(userObj)
+    fetch(`http://localhost:3000/users/${userObj.id}`)
+    .then(r => r.json())
+    .then((currentUserObj) => {
+      //console.log(currentUserObj)
+      this.setState({
+        currentUser: currentUserObj,
+        channels: currentUserObj.rooms, currentChannel: currentUserObj.rooms[0]
+      })
+    })
+
+
+  }
   
   render(){
     const channelNames = this.state.channels.map(channelObj => channelObj.name)
@@ -154,7 +169,19 @@ class App extends React.Component{
     //conditional render to setup login
     if(!this.state.currentUser.id){
       return (
-      <LoginPage onNewLogin = {this.handleNewLogin}/>
+        <React.Fragment>
+        {/* <LoginPage onNewLogin = {this.handleNewLogin}/> */}
+        <Switch>
+    
+        <Route exact path = "/Signup"  
+          render={(props) => <SignupPage {...props} onNewSignup = {this.handleNewSignup}/>} />
+        <Route render={(props) => <LoginPage {...props} onNewLogin = {this.handleNewLogin} />} />
+      </Switch>
+      </React.Fragment>
+
+
+
+      
       )}
       else{
     

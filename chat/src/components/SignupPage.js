@@ -1,16 +1,18 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 
-export default class LoginPage extends Component {
+export default class SignupPage extends Component {
     state = {
         username: '',
-        password: ''
+        password: '',
+        image_url: ''
     }
 
     handleSubmit = (evt) =>{
+        
         evt.preventDefault()
-        //this.props.onNewLogin(this.state)
-        fetch(`http://localhost:3000/login`, {
+        //this.props.onNewSignup(this.state)
+        fetch(`http://localhost:3000/users`, {
             method:'POST',
             headers: { 
                 'Content-type': 'application/json',
@@ -20,15 +22,12 @@ export default class LoginPage extends Component {
         })
         .then(resp => resp.json())
         .then(respObj=> {
-            
             if (!respObj.errors){
-                this.props.onNewLogin(respObj.user)
+                this.props.onNewSignup(respObj.user)
             }
             else {
                 alert(respObj.errors)
             }
-
-        
         })
     }
 
@@ -39,21 +38,21 @@ export default class LoginPage extends Component {
     }
 
     render() {
-        //console.log(this.state.username, this.state.password)
-        
+        //console.log(this.props)
         return (
             <div>
-                <h1>Welcome to HotPlay</h1>
-                <h3>Please Login</h3>
+            <h1>Welcome to HotPlay</h1>
+                <h3>Please Signup</h3>
                 <form onSubmit = {this.handleSubmit}>
                     <input onChange ={this.handleChange} type = "text" placeholder = "username" name="username" value ={this.state.username}/>
+                    <input onChange ={this.handleChange} type = "text" placeholder = "paste image link here" name="image_url" value ={this.state.image_url}/>
                     <input onChange = {this.handleChange} type = "text" placeholder = "password" name ="password" value ={this.state.password}/>
-                    <input type = "submit" value ="login"/>
+                    <input type = "submit" value ="Create Account"/>
                 </form>
-                <Link to= '/signup'>
-                    <h3>Signup</h3>
+                <Link to= '/'>
+                    <h3>Login</h3>
                 </Link>
-        
+                
             </div>
         )
     }
