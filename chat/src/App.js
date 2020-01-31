@@ -84,24 +84,32 @@ class App extends React.Component{
     //console.log(messageText)
     const newMessage = {
       user: this.state.currentUser,
-      content:{
-        text: messageText
+      message:{
+        body: messageText
       }
     }
 
     const updatedChannel = {...this.state.currentChannel, messages: [...this.state.currentChannel.messages, newMessage] }
 
-    fetch(`http://localhost:3000/channels/${updatedChannel.id}`, {
-      method:'PATCH',
+    const bodyOfFetch = {
+      user_id: this.state.currentUser.id,
+      body: messageText,
+      room_id: updatedChannel.id
+    }
+
+    
+
+    fetch(`http://localhost:3000/messages`, {
+      method:'POST',
       headers: { 
         'Content-type': 'application/json',
         'accept': 'application/json'
       },
-      body: JSON.stringify(updatedChannel)
+      body: JSON.stringify(bodyOfFetch)
       })
       .then(resp => resp.json())
       .then(updatedServerChannel => {
-        //console.log(json_resp)
+        //console.log(updatedServerChannel)
         const updatedChannels = this.state.channels.map(channel => {
           if (channel.name === updatedServerChannel.name){
             return updatedServerChannel
@@ -160,8 +168,15 @@ class App extends React.Component{
                   onNewChannel = {this.handleNewChannel}
                   onChangeChannel ={this.handleChangeChannel}
                   user = {this.state.currentUser} 
-                  channelNames = {channelNames}/>
-                <Chat channel = {this.state.currentChannel}/>
+                  channelNames = {channelNames}
+
+                  />
+
+                <Chat 
+                  channel = {this.state.currentChannel}
+                  onNewMessage = {this.handleNewMessage}
+
+                />
                 <Recommended channel = {this.state.currentChannel.name}/> 
                 
                 
