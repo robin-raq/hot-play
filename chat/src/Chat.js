@@ -4,7 +4,7 @@ import MessageForm from './MessageForm'
 
 export default class Chat extends Component {
     render() {
-        const messages = this.props.channel.messages.map(message => <Message key = {message.content.id} text = {message.content.text} photo = {message.user.profile_picture} user = {message.user.username}/>)
+        const messages = this.props.channel.messages.map(message => <Message key = {message.id} text = {message.body} photo = {message.user.image_url} user = {message.user.username}/>)
         
         return (
             <div className= 'chat'>

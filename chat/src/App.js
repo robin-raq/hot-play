@@ -1,33 +1,44 @@
 import React from 'react';
-import './App.css'
-import Sidebar from './Sidebar';
-import Chat from './Chat'
-import data from './data'
-import Recommended from './Recommended'
+import {Switch, Route } from 'react-router-dom';
+import './App.css';
+import Navbar from './components/Navbar'
+import Sidebar from './components/Sidebar';
+import Chat from './Chat';
+import data from './data';
+import Recommended from './Recommended';
+import LoginPage from './components/LoginPage'
 
 class App extends React.Component{
   state = {
     initialData: data,
     channels: [],
+    page:'profile',
     currentChannel: {
       messages: []
     },
     currentUser: {}
   }
 
+  redirect = (page) =>{
+    this.setState({
+      page: page
+    })
+
+  }
+
   componentDidMount(){
-    fetch("http://localhost:3000/current_user")
-    .then(r => r.json())
-    .then((currentUser) => {
-      //console.log(currentUser)
-      this.setState({currentUser: currentUser})
-    })
-    fetch("http://localhost:3000/channels")
-    .then(r => r.json())
-    .then((channels) => {
-      //console.log(currentUser)
-      this.setState({channels: channels, currentChannel: channels[1]})
-    })
+    // fetch(`http://localhost:3000/users/${currentUser.id}`)
+    // .then(r => r.json())
+    // .then((currentUserObj) => {
+    //   console.log(currentUserObj)
+    //   this.setState({currentUser: currentUserObj})
+    // })
+    // fetch("http://localhost:3000/channels")
+    // .then(r => r.json())
+    // .then((channels) => {
+    //   //console.log(currentUser)
+    //   this.setState({channels: channels, currentChannel: channels[1]})
+    // })
 
   }
 
@@ -106,44 +117,65 @@ class App extends React.Component{
 
 
   }
+
+  handleNewLogin =(userObj) =>{
+    //console.log(loginInfo.username, loginInfo.password)
+    // this.setState({
+    //   currentUser: userObj
+    // })
+
+    fetch(`http://localhost:3000/users/${userObj.id}`)
+    .then(r => r.json())
+    .then((currentUserObj) => {
+      //console.log(currentUserObj)
+      this.setState({
+        currentUser: currentUserObj,
+        channels: currentUserObj.rooms, currentChannel: currentUserObj.rooms[0]
+      })
+    })
+
+  }
   
   render(){
     const channelNames = this.state.channels.map(channelObj => channelObj.name)
-    //condition render to setup login
-    if(!this.state.currentUser.id){
-      return <div>
-      <h1>Please Log In</h1>
-      <form>
-        <input type = "text" placeholder = "name"/>
-        <input type = "text" placeholder = "password"/>
-        <input type = "submit" value ="login"/>
-      </form>
-      </div>
-    }
+    console.log(this.state.currentUser)
     
-    return (
+    //conditional render to setup login
+    if(!this.state.currentUser.id){
+      return (
+      <LoginPage onNewLogin = {this.handleNewLogin}/>
+      )}
+      else{
+    
+            return (
+              
+              <React.Fragment>
+              {/* <Navbar/> */}
 
-      <div className = "container">
-        
-        <Sidebar
-          onNewChannel = {this.handleNewChannel}
+              <div className = "container">
+                <Sidebar user = {this.state.currentUser} channelNames = {channelNames}/>
+                <Chat channel = {this.state.currentChannel}/>
+                <Recommended channel = {this.state.currentChannel.name}/> 
+                
+                
+                {/* <Sidebar
+                  onNewChannel = {this.handleNewChannel}
 
-          onChangeChannel ={this.handleChangeChannel}
-          user = {this.state.currentUser}
-          channelNames = {channelNames}
+                  onChangeChannel ={this.handleChangeChannel}
+                  user = {this.state.currentUser}
+                  channelNames = {channelNames}
 
-            />
-        <Chat 
-          onNewMessage = {this.handleNewMessage}
-          channel = {this.state.currentChannel}/>
+                    />
+                <Chat 
+                  onNewMessage = {this.handleNewMessage}
+                  channel = {this.state.currentChannel}/>
 
-        <Recommended channel = {this.state.currentChannel.name}/> 
-        
-
-        
-
-      </div>
-    );
+                <Recommended channel = {this.state.currentChannel.name}/>  */}
+                
+                </div>
+                </React.Fragment>
+            );
+          }
   }
 }
 
