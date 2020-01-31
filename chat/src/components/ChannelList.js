@@ -10,11 +10,12 @@ export default class ChannelList extends Component {
         // this.setState({
         //     channels:[ `#${this.state.newChannelName}`,...this.state.channels]
         // })
+        
         this.props.onNewChannel(this.state.newChannelName)
     }
 
     handleChange =(evt) => {
-        // console.log(evt.target.value)
+        //console.log(evt.target)
         this.setState({
         [evt.target.name]: evt.target.value
     })
@@ -26,6 +27,7 @@ export default class ChannelList extends Component {
     }
 
     render() {
+        //console.log(this.props)
         const channelLis = this.props.channels.map(channelName => (
             <li 
                 onClick = {this.handleChannelClick} 
@@ -42,7 +44,7 @@ export default class ChannelList extends Component {
                 <h4 style = {{marginBottom: 5}}>
                     Channels
                 </h4>
-                <input value={this.state.newChannelName} onChange={this.handleChange}type="text" placeholder="add a channel" name = "newChannelName"/>
+                <input value={this.state.newChannelName} onChange={this.handleChange} type="text" placeholder="add a channel" name = "newChannelName"/>
 
                 <button onClick ={this.handleClick}>+</button>
                 <ul>

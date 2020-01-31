@@ -1,9 +1,9 @@
 import React from 'react';
-import {Switch, Route } from 'react-router-dom';
+// import {Switch, Route } from 'react-router-dom';
 import './App.css';
-import Navbar from './components/Navbar'
+// import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar';
-import Chat from './Chat';
+import Chat from './components/Chat';
 import data from './data';
 import Recommended from './Recommended';
 import LoginPage from './components/LoginPage'
@@ -46,10 +46,12 @@ class App extends React.Component{
   //console.log("i'm the new channel to be added", channelName)
     const newChannel = {
       name: `#${channelName}`,
-      messages: []
+      messages: [],
+      user: this.state.currentUser
+
 
     }
-    fetch(`http://localhost:3000/channels`, {
+    fetch(`http://localhost:3000/rooms`, {
       method:'POST',
       headers: { 
         'Content-Type': 'application/json',
@@ -61,6 +63,7 @@ class App extends React.Component{
     })
     .then(resp => resp.json())
     .then(newServerChannel => {
+      console.log(newServerChannel)
       this.setState({ 
       channels: [...this.state.channels, newServerChannel]})
     
@@ -138,7 +141,7 @@ class App extends React.Component{
   
   render(){
     const channelNames = this.state.channels.map(channelObj => channelObj.name)
-    console.log(this.state.currentUser)
+    //console.log(this.state.currentUser)
     
     //conditional render to setup login
     if(!this.state.currentUser.id){
@@ -153,7 +156,11 @@ class App extends React.Component{
               {/* <Navbar/> */}
 
               <div className = "container">
-                <Sidebar user = {this.state.currentUser} channelNames = {channelNames}/>
+                <Sidebar
+                  onNewChannel = {this.handleNewChannel}
+                  onChangeChannel ={this.handleChangeChannel}
+                  user = {this.state.currentUser} 
+                  channelNames = {channelNames}/>
                 <Chat channel = {this.state.currentChannel}/>
                 <Recommended channel = {this.state.currentChannel.name}/> 
                 
