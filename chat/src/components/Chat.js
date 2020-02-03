@@ -3,15 +3,24 @@ import Message from './Message'
 import MessageForm from './MessageForm'
 
 export default class Chat extends Component {
+    componentDidMount(){
+        setInterval(()=> this.props.updateMessages(this.props.channel.id), 100)
+
+    }
+
+    
+
     render() {
         const messages = this.props.channel.messages.map(message => <Message key = {message.id} text = {message.body} photo = {message.user.image_url} user = {message.user.username}/>)
         
         return (
-            <div className= 'chat'>
+            <div className= 'chat' >
+                
                 <h2>
                     {this.props.channel.name}
                 </h2>
                 {messages}
+            
                 <MessageForm  onNewMessage = {this.props.onNewMessage}/>
             </div>
         )

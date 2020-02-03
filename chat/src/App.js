@@ -19,28 +19,7 @@ class App extends React.Component{
     currentUser: {}
   }
 
-  redirect = (page) =>{
-    this.setState({
-      page: page
-    })
 
-  }
-
-  componentDidMount(){
-    // fetch(`http://localhost:3000/users/${currentUser.id}`)
-    // .then(r => r.json())
-    // .then((currentUserObj) => {
-    //   console.log(currentUserObj)
-    //   this.setState({currentUser: currentUserObj})
-    // })
-    // fetch("http://localhost:3000/channels")
-    // .then(r => r.json())
-    // .then((channels) => {
-    //   //console.log(currentUser)
-    //   this.setState({channels: channels, currentChannel: channels[1]})
-    // })
-
-  }
 
   handleNewChannel = (channelName) =>{
   //console.log("i'm the new channel to be added", channelName)
@@ -161,6 +140,16 @@ class App extends React.Component{
 
 
   }
+
+  getNewMessages = (room_id) =>{
+    fetch(`http://localhost:3000/rooms/${room_id}`)
+    .then(r => r.json())
+    .then((roomObj) => {
+      console.log( roomObj)
+      this.setState({currentChannel: roomObj})
+    })
+        
+  }
   
   render(){
     const channelNames = this.state.channels.map(channelObj => channelObj.name)
@@ -202,24 +191,10 @@ class App extends React.Component{
                 <Chat 
                   channel = {this.state.currentChannel}
                   onNewMessage = {this.handleNewMessage}
+                  updateMessages = {this.getNewMessages}
 
                 />
                 <Recommended channel = {this.state.currentChannel.name}/> 
-                
-                
-                {/* <Sidebar
-                  onNewChannel = {this.handleNewChannel}
-
-                  onChangeChannel ={this.handleChangeChannel}
-                  user = {this.state.currentUser}
-                  channelNames = {channelNames}
-
-                    />
-                <Chat 
-                  onNewMessage = {this.handleNewMessage}
-                  channel = {this.state.currentChannel}/>
-
-                <Recommended channel = {this.state.currentChannel.name}/>  */}
                 
                 </div>
                 </React.Fragment>
