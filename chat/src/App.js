@@ -178,9 +178,15 @@ class App extends React.Component{
 
   }
 
- 
-
-
+  getNewMessages = (room_id) =>{
+    fetch(`http://localhost:3000/rooms/${room_id}`)
+    .then(r => r.json())
+    .then((roomObj) => {
+      console.log( roomObj)
+      this.setState({currentChannel: roomObj})
+    })
+        
+  }
   
   render(){
     const channelNames = this.state.channels.map(channelObj => channelObj.name)
