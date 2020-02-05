@@ -25,7 +25,13 @@ export default class Recommended extends Component {
                             size={size}
                             view={view}
                             theme={theme}
-/>
+                    />
+                    <SpotifyPlayer
+                    uri="spotify:album:15QCrOnubJ2AiL43z7stt0"
+                            size={size}
+                            view={view}
+                            theme={theme}
+                    />
                 </h2>
             
                 

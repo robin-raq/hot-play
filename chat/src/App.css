@@ -89,6 +89,7 @@ li {
 
 .chat {
   width: 60%;
+  overflow: scroll;
 }
 
 .chat form {

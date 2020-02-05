@@ -7,7 +7,6 @@ export default class MessageForm extends Component {
     }
 
     handleChange = (evt)=>{
-        //console.log(evt.target.value)
         this.setState({
             [evt.target.name]: evt.target.value
         })
@@ -17,8 +16,10 @@ export default class MessageForm extends Component {
     handleSubmit = (evt) =>{
         evt.preventDefault()
         this.props.onNewMessage(this.state.message)
+        this.setState({message: ''})
     }
     render() {
+        //console.log(this.state, "from messageForm")
         return (
             <form onSubmit ={this.handleSubmit}>
             <input onChange = {this.handleChange} type="text" placeholder ="send a message" name = "message" value = {this.state.message}/>

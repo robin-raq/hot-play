@@ -9,8 +9,16 @@ import Recommended from './Recommended';
 import LoginPage from './components/LoginPage'
 import SignupPage from './components/SignupPage'
 
+
+
+//action cable imports
+import { API_ROOT } from './constants';
+
+
+
 class App extends React.Component{
   state = {
+    appChannels:[],
     channels: [],
     page:'profile',
     currentChannel: {
@@ -19,26 +27,17 @@ class App extends React.Component{
     currentUser: {}
   }
 
-  redirect = (page) =>{
-    this.setState({
-      page: page
-    })
-
-  }
+  
 
   componentDidMount(){
-    // fetch(`http://localhost:3000/users/${currentUser.id}`)
-    // .then(r => r.json())
-    // .then((currentUserObj) => {
-    //   console.log(currentUserObj)
-    //   this.setState({currentUser: currentUserObj})
-    // })
-    // fetch("http://localhost:3000/channels")
-    // .then(r => r.json())
-    // .then((channels) => {
-    //   //console.log(currentUser)
-    //   this.setState({channels: channels, currentChannel: channels[1]})
-    // })
+
+    fetch(`http://localhost:3000/rooms`)
+    .then(r => r.json())
+    .then((roomsArr) => {
+      //console.log(roomsArr)
+      this.setState({appChannels: roomsArr})
+    })
+    
 
   }
 
@@ -61,19 +60,48 @@ class App extends React.Component{
         newChannel
       )
     })
-    .then(resp => resp.json())
-    .then(newServerChannel => {
-      console.log(newServerChannel)
-      this.setState({ 
-      channels: [...this.state.channels, newServerChannel]})
+    // // .then(resp => resp.json())
+    // // .then(channelObj => {
+    // //   console.log(channelObj)
+    //     this.setState({ 
+    //       //update all channels
+    //       appChannels: [channelObj, ...this.state.appChannels],
+    //       //update the users channels
+    //       channels: [...this.state.channels, channelObj]})
     
-    })
+
+    // // })
 
   }
 
-  handleChangeChannel =(channelName) =>{
-    //console.log(channelName)
-    const selectedChannel = this.state.channels.find(channelObj => channelObj.name === channelName)
+  displayNewChannel =(channelObj) =>{
+
+    //console.log(channelObj.room)
+
+    //update the user who made channel channels
+    if(this.state.currentUser.id === channelObj.user_id){
+
+      this.setState({
+      channels: [...this.state.channels, channelObj.room],
+      appChannels: [channelObj.room, ...this.state.appChannels]
+    })
+  }else{
+
+
+    this.setState({ 
+      //update all channels
+      appChannels: [channelObj.room, ...this.state.appChannels]
+      })
+    }
+    
+
+  }
+
+  handleChangeChannel =(channelId) =>{
+    //console.log(channelId)
+    //console.log(this.state.channels.filter(c => c.id == channelId ))
+    const selectedChannel = this.state.channels.find(channelObj => channelObj.id == channelId)
+    //console.log(selectedChannel)
     this.setState({
       currentChannel: selectedChannel
     })
@@ -107,35 +135,23 @@ class App extends React.Component{
       },
       body: JSON.stringify(bodyOfFetch)
       })
-      .then(resp => resp.json())
-      .then(updatedServerChannel => {
-        //console.log(updatedServerChannel)
-        const updatedChannels = this.state.channels.map(channel => {
-          if (channel.name === updatedServerChannel.name){
-            return updatedServerChannel
-          } else {
-            return channel
-          }
-        } )
-    
-        this.setState({
-          currentChannel: updatedServerChannel,
-          channels: updatedChannels
-    
-    
-        })
-      })
-
-
   }
 
-  handleNewLogin =(userObj) =>{
-    //console.log(loginInfo.username, loginInfo.password)
-    // this.setState({
-    //   currentUser: userObj
-    // })
+  displayNewMessage = response => {
+    console.log(response, "FROM LINE 168")
+    const { message, room_id } = response;
+    // // debugger
+    const channels = [...this.state.channels];
+    const channel = channels.find(  
+      channel => channel.id === room_id
+    );
+    channel.messages = [...channel.messages, message];
+    this.setState({ channels });
+};
 
-    fetch(`http://localhost:3000/users/${userObj.id}`)
+  handleNewLogin =(userObj) =>{
+
+    fetch(`${API_ROOT}/users/${userObj.id}`)
     .then(r => r.json())
     .then((currentUserObj) => {
       //console.log(currentUserObj)
@@ -161,6 +177,10 @@ class App extends React.Component{
 
 
   }
+
+ 
+
+
   
   render(){
     const channelNames = this.state.channels.map(channelObj => channelObj.name)
@@ -170,24 +190,17 @@ class App extends React.Component{
     if(!this.state.currentUser.id){
       return (
         <React.Fragment>
-        {/* <LoginPage onNewLogin = {this.handleNewLogin}/> */}
-        <Switch>
-    
-        <Route exact path = "/Signup"  
-          render={(props) => <SignupPage {...props} onNewSignup = {this.handleNewSignup}/>} />
-        <Route render={(props) => <LoginPage {...props} onNewLogin = {this.handleNewLogin} />} />
-      </Switch>
-      </React.Fragment>
-
-
-
-      
+            <Switch>
+        
+              <Route exact path = "/Signup"  
+                render={(props) => <SignupPage {...props} onNewSignup = {this.handleNewSignup}/>} />
+              <Route render={(props) => <LoginPage {...props} onNewLogin = {this.handleNewLogin} />} />
+          </Switch>
+        </React.Fragment>
       )}
       else{
-    
-            return (
-              
-              <React.Fragment>
+        return (
+          <React.Fragment>
               {/* <Navbar/> */}
 
               <div className = "container">
@@ -196,30 +209,23 @@ class App extends React.Component{
                   onChangeChannel ={this.handleChangeChannel}
                   user = {this.state.currentUser} 
                   channelNames = {channelNames}
+                  channels ={this.state.channels}
+                  displayNewMessage = {this.displayNewMessage}
+                  allChannels = {this.state.appChannels}
+                  displayNewChannel = {this.displayNewChannel}
 
                   />
+
+                
 
                 <Chat 
                   channel = {this.state.currentChannel}
                   onNewMessage = {this.handleNewMessage}
+                  
+                  
 
                 />
                 <Recommended channel = {this.state.currentChannel.name}/> 
-                
-                
-                {/* <Sidebar
-                  onNewChannel = {this.handleNewChannel}
-
-                  onChangeChannel ={this.handleChangeChannel}
-                  user = {this.state.currentUser}
-                  channelNames = {channelNames}
-
-                    />
-                <Chat 
-                  onNewMessage = {this.handleNewMessage}
-                  channel = {this.state.currentChannel}/>
-
-                <Recommended channel = {this.state.currentChannel.name}/>  */}
                 
                 </div>
                 </React.Fragment>

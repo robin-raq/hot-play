@@ -12,6 +12,7 @@ export default class Chat extends Component {
                     {this.props.channel.name}
                 </h2>
                 {messages}
+                
                 <MessageForm  onNewMessage = {this.props.onNewMessage}/>
             </div>
         )
