@@ -35,6 +35,7 @@ export default class ChannelList extends Component {
     handleChannelClick = (evt) =>{
         console.log(evt.target.id)
         this.props.onChangeChannel(evt.target.id)
+        this.setState({newChannelName: ''})
     }
 
     handleReceivedMessage = response => {

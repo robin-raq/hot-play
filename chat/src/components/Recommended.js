@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-//import MusicPlayer from 'react-responsive-music-player';
 import SpotifyPlayer from 'react-spotify-player';
-//import {playlist} from './data.js';
+
 
 export default class Recommended extends Component {
 

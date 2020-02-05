@@ -5,7 +5,7 @@ import './App.css';
 import Sidebar from './components/Sidebar';
 import Chat from './components/Chat';
 
-import Recommended from './Recommended';
+import Recommended from './components/Recommended';
 import LoginPage from './components/LoginPage'
 import SignupPage from './components/SignupPage'
 
@@ -193,7 +193,9 @@ class App extends React.Component{
     //console.log(this.state.currentUser)
     
     //conditional render to setup login
-    if(!this.state.currentUser.id){
+    if(!this.state.currentUser.id)
+    //if(1===0)
+    {
       return (
         <React.Fragment>
             <Switch>
@@ -206,8 +208,7 @@ class App extends React.Component{
       )}
       else{
         return (
-          <React.Fragment>
-              {/* <Navbar/> */}
+          
 
               <div className = "container">
                 <Sidebar
@@ -234,7 +235,7 @@ class App extends React.Component{
                 <Recommended channel = {this.state.currentChannel.name}/> 
                 
                 </div>
-                </React.Fragment>
+                
             );
           }
   }

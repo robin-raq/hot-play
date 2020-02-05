@@ -1,26 +1,24 @@
 import React, { Component } from 'react'
 import Message from './Message'
 import MessageForm from './MessageForm'
+import tachyons from 'tachyons'
 
 export default class Chat extends Component {
-    // componentDidMount(){
-    //     setInterval(()=> this.props.updateMessages(this.props.channel.id), 100)
-
-    // }
-
-    
 
     render() {
         const messages = this.props.channel.messages.map(message => <Message key = {message.id} text = {message.body} photo = {message.user.image_url} user = {message.user.username}/>)
         
         return (
-            <div className= 'chat' >
-                
+            <div>
                 <h2>
                     {this.props.channel.name}
                 </h2>
+            <div className= 'chat ba b--dashed bw' >
+                
                 {messages}
+                
             
+            </div>
                 <MessageForm  onNewMessage = {this.props.onNewMessage}/>
             </div>
         )
