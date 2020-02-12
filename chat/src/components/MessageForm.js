@@ -24,7 +24,7 @@ export default class MessageForm extends Component {
             <form 
                 className="bg-light-red mw7 center pa4 br2-ns ba b--black-10"
                 onSubmit ={this.handleSubmit}>
-                <fieldset class="cf bn ma0 pa0">
+                <fieldset className="cf bn ma0 pa0">
                 <div className="cf">
             <input 
                 className="f6 f5-l input-reset bn fl black-80 bg-white pa3 lh-solid w-100 w-75-m w-80-l br2-ns br--left-ns"

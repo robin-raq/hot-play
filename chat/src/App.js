@@ -1,18 +1,18 @@
 import React from 'react';
 import {Switch, Route } from 'react-router-dom';
 import './App.css';
-// import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar';
 import Chat from './components/Chat';
-
 import Recommended from './components/Recommended';
 import LoginPage from './components/LoginPage'
 import SignupPage from './components/SignupPage'
 
+import searchYoutube from 'youtube-api-v3-search';
+// import spotifyApiWrapper from 'vs-spotify-api-wrapper';
 
+import REACT_APP_YOUTUBE_API_KEY from './config_keys'
 
-//action cable imports
-import { API_ROOT } from './constants';
+// import Navbar from './components/Navbar'
 
 
 
@@ -24,21 +24,21 @@ class App extends React.Component{
     currentChannel: {
       messages: []
     },
-    currentUser: {}
+    currentUser: {},
+    // vidId: 'RqQGUJK7Na4',
+    playlistId: 'PLuUrokoVSxlen92kBCj8pub7KkoMrqp3N',
+    vidObjsArray: []
   }
 
   
 
   componentDidMount(){
-
     fetch(`http://localhost:3000/rooms`)
     .then(r => r.json())
     .then((roomsArr) => {
       //console.log(roomsArr)
       this.setState({appChannels: roomsArr})
     })
-    
-
   }
 
   handleNewChannel = (channelName) =>{
@@ -47,10 +47,8 @@ class App extends React.Component{
       name: `#${channelName}`,
       messages: [],
       user: this.state.currentUser
-
-
     }
-    fetch(`http://localhost:3000/rooms`, {
+    fetch(`http://localhost:3000/rooms`,{
       method:'POST',
       headers: { 
         'Content-Type': 'application/json',
@@ -97,16 +95,63 @@ class App extends React.Component{
 
   }
 
-  handleChangeChannel =(channelId) =>{
+  handleChangeChannel =(channelId, evt) =>{
     //console.log(channelId)
     //console.log(this.state.channels.filter(c => c.id == channelId ))
     const selectedChannel = this.state.channels.find(channelObj => channelObj.id == channelId)
     //console.log(selectedChannel)
+    // this.getVideo(selectedChannel.name)
+    this.getPlaylist(selectedChannel.name)
     this.setState({
       currentChannel: selectedChannel
     })
 
   }
+
+  // getVideo = (newChannelName) => {
+  //   const API_KEY = REACT_APP_YOUTUBE_API_KEY
+  //   const options = {
+  //     q: `new ${newChannelName} tracks`,
+  //     part:'snippet',
+  //     type: 'video',
+  //     maxResults: 50,
+  //     order: 'relevance',
+  //     videoDuration: 'short'
+  //     }
+  //   let result =  searchYoutube( API_KEY,options);
+  //   result.then((respObj) => {
+  //          console.log(respObj)
+  //     const selector = Math.floor((Math.random() * respObj.items.length))
+  //     this.setState({
+  //       vidObjsArray: respObj.items,
+  //       vidId: respObj.items[selector].id.videoId
+  //     })
+  //   })
+    
+  // }
+
+  getPlaylist =(newChannelName) =>{
+    const API_KEY = REACT_APP_YOUTUBE_API_KEY
+    const options = {
+      q: `${newChannelName} music`,
+      part:'id',
+      type: 'playlist',
+      order: 'viewCount',
+      maxResults: 10
+      }
+    let result =  searchYoutube( API_KEY,options);
+    result.then((respObj) => {
+           console.log(respObj.items)
+           const selector = Math.floor((Math.random() * respObj.items.length))
+           this.setState({
+            playlistId: respObj.items[selector].id.playlistId
+          })
+      
+      })
+    }
+    
+
+  
 
   handleNewMessage =(messageText) =>{
     //console.log(messageText)
@@ -147,11 +192,11 @@ class App extends React.Component{
     );
     channel.messages = [...channel.messages, message];
     this.setState({ channels });
-};
+  };
 
   handleNewLogin =(userObj) =>{
 
-    fetch(`${API_ROOT}/users/${userObj.id}`)
+    fetch(`http://localhost:3000/users/${userObj.id}`)
     .then(r => r.json())
     .then((currentUserObj) => {
       //console.log(currentUserObj)
@@ -171,11 +216,10 @@ class App extends React.Component{
       //console.log(currentUserObj)
       this.setState({
         currentUser: currentUserObj,
-        channels: currentUserObj.rooms, currentChannel: currentUserObj.rooms[0]
+        channels: currentUserObj.rooms, 
+        currentChannel: currentUserObj.rooms[0]
       })
     })
-
-
   }
 
   getNewMessages = (room_id) =>{
@@ -193,8 +237,9 @@ class App extends React.Component{
     //console.log(this.state.currentUser)
     
     //conditional render to setup login
-    if(!this.state.currentUser.id)
+    // if(!this.state.currentUser.id)
     //if(1===0)
+    if (!localStorage.token)
     {
       return (
         <React.Fragment>
@@ -202,7 +247,7 @@ class App extends React.Component{
         
               <Route exact path = "/Signup"  
                 render={(props) => <SignupPage {...props} onNewSignup = {this.handleNewSignup}/>} />
-              <Route render={(props) => <LoginPage {...props} onNewLogin = {this.handleNewLogin} />} />
+              <Route  render={(props) => <LoginPage {...props} onNewLogin = {this.handleNewLogin} />} />
           </Switch>
         </React.Fragment>
       )}
@@ -211,7 +256,9 @@ class App extends React.Component{
           
 
               <div className = "container">
-                <Sidebar
+              
+
+                <Sidebar 
                   onNewChannel = {this.handleNewChannel}
                   onChangeChannel ={this.handleChangeChannel}
                   user = {this.state.currentUser} 
@@ -220,21 +267,24 @@ class App extends React.Component{
                   displayNewMessage = {this.displayNewMessage}
                   allChannels = {this.state.appChannels}
                   displayNewChannel = {this.displayNewChannel}
-
-                  />
-
-                
+                  getVideo = {this.getVideo}
+                  getPlaylist = {this.getPlaylist}
+                  onNewLogin = {this.handleNewLogin}
+                /> 
 
                 <Chat 
                   channel = {this.state.currentChannel}
                   onNewMessage = {this.handleNewMessage}
-                  
-                  
-
                 />
-                <Recommended channel = {this.state.currentChannel.name}/> 
+
+                <Recommended 
+                  channel = {this.state.currentChannel.name} 
+                  vidId = {this.state.vidId}
+                  playlistId= {this.state.playlistId}
+                /> 
                 
-                </div>
+                
+              </div>
                 
             );
           }

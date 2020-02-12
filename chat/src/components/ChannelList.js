@@ -33,8 +33,9 @@ export default class ChannelList extends Component {
     }
 
     handleChannelClick = (evt) =>{
-        console.log(evt.target.id)
+        console.log(evt)
         this.props.onChangeChannel(evt.target.id)
+        //this.props.getVideo(evt.target.value)
         this.setState({newChannelName: ''})
     }
 
@@ -70,7 +71,7 @@ export default class ChannelList extends Component {
         ))
         
         return (
-            <div>
+            <div className="ba b--dotted bw1">
                 
                 <Cable 
                     channels={this.props.channels}

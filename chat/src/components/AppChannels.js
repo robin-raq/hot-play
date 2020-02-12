@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { ActionCableConsumer} from 'react-actioncable-provider';
-import { API_ROOT } from '../constants';
-import uuid from 'uuid/v4'
+//import { API_ROOT } from '../constants';
+// import uuid from 'uuid/v4'
 
 export default class AppChannels extends Component {
 

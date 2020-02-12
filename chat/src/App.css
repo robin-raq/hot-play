@@ -15,14 +15,14 @@ img {
 
 .container {
   display: flex;
-  height: 100vh;
+  height: 95vh;
 }
 
 .sidebar {
-  margin-right: 15px;
-  min-width: 200px;
+  margin-right: 60px;
+  min-width: 290px;
   background: #525252;
-  padding: 20px;
+  padding: 30px;
   color: white;
 }
 
@@ -37,7 +37,8 @@ img {
 }
 
 ul {
-  padding: 0;
+  padding: 20;
+  overflow: auto;
 }
 
 li {
@@ -53,7 +54,7 @@ li {
   height: 20px;
   border: none;
   line-height: 15px;
-  padding: 3px 5px;
+  padding: 5px 5px;
 }
 
 .sidebar button {
@@ -89,7 +90,7 @@ li {
 
 .chat {
   width: 100%;
-  height: 80%;
+  height: 75%;
   overflow: scroll;
 }
 
@@ -97,7 +98,7 @@ li {
   position: relative;
   bottom: 0;
   margin: 20px 0px;
-  width: 40%;
+  width: 60%;
   border: 1px solid;
   padding: 10px;
   border-radius: 10px;
@@ -125,15 +126,28 @@ li {
 }
 
 .recommended {
-    width: 40%;
+    display: flex;
+    width: 50%;
     text-align: center;
-    margin-left: 20px;
+    margin-left: 100px;
     min-width: 200px;
     background: #0c0707;
-    padding: 20px;
+    padding: 40px;
     color: white;
+    justify-content: flex-start;
   }
 
   .scroll-auto {
     -webkit-overflow-scrolling: auto; /* Lets it scroll lazy */
   }
+
+  .player-wrapper {
+    position: relative;
+    padding-top: 56.25% /* Player ratio: 100 / (1280 / 720) */
+  }
+  .react-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+

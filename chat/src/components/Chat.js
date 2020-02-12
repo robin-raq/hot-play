@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Message from './Message'
 import MessageForm from './MessageForm'
-import tachyons from 'tachyons'
+import Tachyons from 'tachyons'
 
 export default class Chat extends Component {
 

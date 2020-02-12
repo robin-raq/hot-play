@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
-import tachyons from 'tachyons'
+// import tachyons from 'tachyons';
 
 export default class LoginPage extends Component {
     state = {
@@ -21,8 +21,10 @@ export default class LoginPage extends Component {
         })
         .then(resp => resp.json())
         .then(respObj=> {
+            console.log(respObj)
             
             if (!respObj.errors){
+                localStorage.token = respObj.token
                 this.props.onNewLogin(respObj.user)
             }
             else {
@@ -66,12 +68,14 @@ export default class LoginPage extends Component {
                             name ="password" 
                             value ={this.state.password}/>
                         </fieldset>
+                        
                         <input 
                             className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" 
                             type = "submit" 
                             value ="login"
 
                         />
+                        
                 <Link to= '/signup' >
                     <h4 className="f6 link  db" >Signup</h4>
                 </Link>
