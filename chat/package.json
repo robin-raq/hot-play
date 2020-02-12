@@ -18,7 +18,8 @@
     "react-websocket": "^2.1.0",
     "tachyons-forms": "^3.1.4",
     "uuid": "^3.4.0",
-    "vs-spotify-api-wrapper": "^1.1.1"
+    "vs-spotify-api-wrapper": "^1.1.1",
+    "webkit-npm": "^3.1.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -43,15 +43,17 @@ export default class Recommended extends Component {
         //   const theme = 'black'; // or 'white'
 
         return (
+            
             <div className = "recommended">
-                <h2>
+                <h1 className= "mt2 mb0 f1 fw1 ttu tracked glow">
                     Hot Recs {this.props.channel} 
+                </h1>
                     {/* <div className='player-wrapper'>
                         <ReactPlayer className='react-player' url= {`https://www.youtube.com/watch?v=${this.props.vidId}`} playing = {false}  controls width ={300} height = {200} />
                     </div> */}
-                    <div className='player-wrapper'>
-                    <ReactPlayer className='react-player' url= {`https://www.youtube.com/playlist?list=${this.props.playlistId}`} playing = {false}   controls width ={500} height = {400} />
-                    </div>
+                <div className='player-wrapper'>
+                    <ReactPlayer className='react-player' url= {`https://www.youtube.com/playlist?list=${this.props.playlistId}`} playing = {false}   controls width ={900} height = {500} />
+                </div>
 
                     
 
@@ -68,10 +70,11 @@ export default class Recommended extends Component {
                             view={view}
                             theme={theme}
                     /> */}
-                </h2>
+                
             
                 
             </div>
+            
         )
     }
 }

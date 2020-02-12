@@ -17,14 +17,15 @@ class Sidebar extends React.Component{
     render(){
         console.log(this.props.user.image_url)
         return(
+            
             <div className = 'sidebar'>
             <Link to= '/Login' refresh="true">
                     
                 <button className="f6 link  db" onClick={this.handleClick}>Logout</button>
             </Link>
-                <h2>
+                <h1>
                     HotPlay!
-                </h2>
+                </h1>
                 <Profile 
                     username = {this.props.user.username} 
                     imageUrl ={this.props.user.image_url}
@@ -45,6 +46,7 @@ class Sidebar extends React.Component{
                 />
 
             </div>
+           
         )
     }
 }

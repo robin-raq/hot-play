@@ -24,6 +24,7 @@ export default class AppChannels extends Component {
 
     handleClick = channelObj => {
         console.log("you clicked on channel:", channelObj.id )
+        alert('please join channel to view')
     };
 
     handleReceivedChannel = response => {
@@ -55,11 +56,13 @@ export default class AppChannels extends Component {
 const mapChannels = (channels, handleClick) => {
     return channels.map(channel => {
         return (
+            <div>
             <li 
                 key={channel.id} 
                 onClick={() => handleClick(channel)}>
-                {channel.name}
+                {channel.name} <button>join</button>
             </li>
+            </div>
         )}
     )
 }

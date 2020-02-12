@@ -36,10 +36,15 @@ class App extends React.Component{
     fetch(`http://localhost:3000/rooms`)
     .then(r => r.json())
     .then((roomsArr) => {
-      //console.log(roomsArr)
+      // console.log(roomsArr)
       this.setState({appChannels: roomsArr})
     })
   }
+
+  // filterChannels=(roomsArr, userRooms)=>{
+  //   roomsArr.filter(room => !userRooms.includes(room))
+
+  // }
 
   handleNewChannel = (channelName) =>{
   //console.log("i'm the new channel to be added", channelName)
@@ -80,17 +85,25 @@ class App extends React.Component{
     if(this.state.currentUser.id === channelObj.user_id){
 
       this.setState({
-      channels: [...this.state.channels, channelObj.room],
-      appChannels: [channelObj.room, ...this.state.appChannels]
+      channels: [...this.state.channels, channelObj.room]
     })
-  }else{
-
-
+  }else if(!this.state.appChannels.includes(channelObj)){
     this.setState({ 
       //update all channels
       appChannels: [channelObj.room, ...this.state.appChannels]
       })
-    }
+
+  }
+  
+  
+  // else{
+
+
+  //   this.setState({ 
+  //     //update all channels
+  //     appChannels: [channelObj.room, ...this.state.appChannels]
+  //     })
+  //   }
     
 
   }
@@ -141,11 +154,24 @@ class App extends React.Component{
       }
     let result =  searchYoutube( API_KEY,options);
     result.then((respObj) => {
-           console.log(respObj.items)
-           const selector = Math.floor((Math.random() * respObj.items.length))
-           this.setState({
-            playlistId: respObj.items[selector].id.playlistId
-          })
+
+           console.log(respObj.items.length)
+           if(respObj.items.length === 0){
+            alert('no playlist found')
+            this.setState({
+              playlistId: ' '
+            })
+           }
+
+          else{
+            const selector = Math.floor((Math.random() * respObj.items.length))
+            this.setState({
+              playlistId: respObj.items[selector].id.playlistId
+            })
+          }
+        
+
+        
       
       })
     }
@@ -234,7 +260,7 @@ class App extends React.Component{
   
   render(){
     const channelNames = this.state.channels.map(channelObj => channelObj.name)
-    //console.log(this.state.currentUser)
+    // console.log(this.state.currentUser)
     
     //conditional render to setup login
     // if(!this.state.currentUser.id)

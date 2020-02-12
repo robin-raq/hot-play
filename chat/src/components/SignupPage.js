@@ -23,6 +23,7 @@ export default class SignupPage extends Component {
         .then(resp => resp.json())
         .then(respObj=> {
             if (!respObj.errors){
+                localStorage.token = respObj.token
                 this.props.onNewSignup(respObj.user)
                 
             }
@@ -42,7 +43,8 @@ export default class SignupPage extends Component {
         //console.log(this.props)
         return (
             <div>
-            <h1 className="link dim black b f1 f-headline-ns tc db mb3 mb4-ns">Welcome to HotPlay</h1>
+            <h1 className="link dim black b f1 f-headline-ns tc db mb3 mb4-ns glow">Welcome to HotPlay</h1>
+                <h2 class="mt2 mb0 f4 fw4 ttu tc tracked"> 🔥 Discover, Listen, Connect 🔥</h2>
             <main className="pa4 black-80">
                 <form 
                     className = "measure center"

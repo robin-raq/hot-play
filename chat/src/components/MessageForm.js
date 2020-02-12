@@ -22,7 +22,7 @@ export default class MessageForm extends Component {
         //console.log(this.state, "from messageForm")
         return (
             <form 
-                className="bg-light-red mw7 center pa4 br2-ns ba b--black-10"
+                className="bg-light-red mw8 center pa4 br2-ns ba b--black-10"
                 onSubmit ={this.handleSubmit}>
                 <fieldset className="cf bn ma0 pa0">
                 <div className="cf">
