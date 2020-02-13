@@ -9,17 +9,16 @@ export default class Chat extends Component {
         const messages = this.props.channel.messages.map(message => <Message key = {message.id} text = {message.body} photo = {message.user.image_url} user = {message.user.username}/>)
         
         return (
-            <div >
+            <div className = "chat-container">
                 <h1>
                     {this.props.channel.name}
                 </h1>
-            <div className= 'chat ba b--dashed bw3' >
-                
-                {messages}
-                
-            
-            </div>
-                <MessageForm  onNewMessage = {this.props.onNewMessage}/>
+                <div className= 'chat ba b--dashed bw3'>
+                    {messages}
+                </div>
+                <MessageForm  
+                    onNewMessage = {this.props.onNewMessage}
+                />
             </div>
         )
     }

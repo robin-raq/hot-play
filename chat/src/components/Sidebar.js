@@ -1,4 +1,3 @@
-//imports
 import React from 'react';
 import Profile from './Profile';
 import ChannelList from './ChannelList';
@@ -6,31 +5,40 @@ import AppChannels from './AppChannels';
 import {Link} from 'react-router-dom';
 
 
-//building the component
 class Sidebar extends React.Component{
+
+    //function to logout on click
     handleClick = () => {
         localStorage.clear()
         window.location.reload();
-        // this.props.redirect('login')
-      }
+    }
     
     render(){
-        console.log(this.props.user.image_url)
+        console.log("current user: ", this.props.user)
         return(
             
             <div className = 'sidebar'>
-            <Link to= '/Login' refresh="true">
-                    
-                <button className="f6 link  db" onClick={this.handleClick}>Logout</button>
-            </Link>
-                <h1>
-                    HotPlay!
-                </h1>
+                <Link to= '/Login' refresh="true">
+                    <button 
+                        className="f6 link grow ttu db bg-black white logout" 
+                        onClick={this.handleClick}
+                    >
+                        Logout
+                    </button>
+                    <br></br>
+                    <br></br>
+                </Link>
+                <div className = "neon">
+                <span class="logo" data-text="  HotPlay">HotPlay </span>
+                <span class="gradient"></span>
+                <span class="spotlight"></span>
+                </div>
+
                 <Profile 
                     username = {this.props.user.username} 
                     imageUrl ={this.props.user.image_url}
                     onNewLogin ={this.props.onNewLogin}
-                    />
+                />
 
                 <ChannelList 
                     onNewChannel ={this.props.onNewChannel}
@@ -39,19 +47,18 @@ class Sidebar extends React.Component{
                     channelNames ={this.props.channelNames}
                     displayNewMessage = {this.props.displayNewMessage}
                     getVideo = {this.props.getVideo}
-                    />
+                />
+
                 <AppChannels 
                     allChannels = {this.props.allChannels}
                     displayNewChannel = {this.props.displayNewChannel}
                 />
 
             </div>
-           
         )
     }
 }
 
-//exporting the component
 export default Sidebar;
 
 

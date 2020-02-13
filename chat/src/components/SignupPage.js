@@ -42,7 +42,7 @@ export default class SignupPage extends Component {
     render() {
         //console.log(this.props)
         return (
-            <div>
+            <div className = "login">
             <h1 className="link dim black b f1 f-headline-ns tc db mb3 mb4-ns glow">Welcome to HotPlay</h1>
                 <h2 class="mt2 mb0 f4 fw4 ttu tc tracked"> 🔥 Discover, Listen, Connect 🔥</h2>
             <main className="pa4 black-80">

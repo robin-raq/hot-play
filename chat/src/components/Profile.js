@@ -29,12 +29,12 @@ export default class Profile extends Component {
         //console.log(this.state)
         return (
             <div className = "profile">
-                <h2>
+                <h2 className = 'mt2 mb0 baskerville i fw1 f1' >
                     Current User:
                 </h2>
                 
                 <img className = "profile-photo" src={this.state.user.image_url} alt ="profile pic" />
-                <h4>{this.state.user.username}</h4>
+                <h2 className= "f1">{this.state.user.username}</h2>
                 
             </div>
         )

@@ -39,7 +39,7 @@ export default class AppChannels extends Component {
     render() {
         console.log(this.props)
         return (
-            <div>
+            <div className = "appChannels">
                 <ActionCableConsumer
                 channel={{ channel: 'RoomsChannel' }}
                 onReceived={this.handleReceivedChannel}
