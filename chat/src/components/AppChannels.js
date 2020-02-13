@@ -23,9 +23,15 @@ export default class AppChannels extends Component {
     // };
 
     handleClick = channelObj => {
-        console.log("you clicked on channel:", channelObj.id )
-        alert('please join channel to view')
+        console.log("you clicked on channel:", channelObj.name )
+        // alert('please join channel to view')
+        const nameNoHash = (channelObj.name).substring(1, channelObj.name.length)
+        this.props.onJoinChannel(nameNoHash)
     };
+
+    joinChannel =(channelObj) =>{
+        // console.log("welcome to ", channelObj.name )
+    }
 
     handleReceivedChannel = response => {
         console.log(response)
@@ -37,7 +43,9 @@ export default class AppChannels extends Component {
     };
 
     render() {
-        console.log(this.props)
+        // console.log(this.props)
+        let difference = this.props.allChannels.filter(x => !this.props.channels.includes(x))
+
         return (
             <div className = "appChannels">
                 <ActionCableConsumer
@@ -45,7 +53,8 @@ export default class AppChannels extends Component {
                 onReceived={this.handleReceivedChannel}
                 />
                 <h2>All Channels</h2>
-                <ul>{mapChannels(this.props.allChannels, this.handleClick)}</ul>
+                <ul className = "channelsList">{mapChannels(this.props.allChannels, this.handleClick)}</ul>
+                {/* <ul className = "channelsList">{mapChannels(difference, this.handleClick)}</ul> */}
             </div>
         )
     }
@@ -60,7 +69,7 @@ const mapChannels = (channels, handleClick) => {
             <li 
                 key={channel.id} 
                 onClick={() => handleClick(channel)}>
-                {channel.name} <button>join</button>
+                {channel.name} <button >join</button>
             </li>
             </div>
         )}

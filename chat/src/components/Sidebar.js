@@ -26,13 +26,11 @@ class Sidebar extends React.Component{
                         Logout
                     </button>
                     <br></br>
-                    <br></br>
+                    
                 </Link>
-                <div className = "neon">
-                <span class="logo" data-text="  HotPlay">HotPlay </span>
-                <span class="gradient"></span>
-                <span class="spotlight"></span>
-                </div>
+                
+                <h1>🔥HotPlay</h1> 
+            
 
                 <Profile 
                     username = {this.props.user.username} 
@@ -52,6 +50,8 @@ class Sidebar extends React.Component{
                 <AppChannels 
                     allChannels = {this.props.allChannels}
                     displayNewChannel = {this.props.displayNewChannel}
+                    onJoinChannel = {this.props.onNewChannel}
+                    channels = {this.props.channels}
                 />
 
             </div>

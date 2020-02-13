@@ -13,7 +13,6 @@ import REACT_APP_YOUTUBE_API_KEY from './config_keys'
 
 
 
-
 class App extends React.Component{
   state = {
     appChannels:[],
@@ -23,7 +22,7 @@ class App extends React.Component{
     },
     currentUser: {},
     playlistId: 'PLuUrokoVSxlen92kBCj8pub7KkoMrqp3N',
-    vidsArr: ['r_Q40kOt9X0', 'pwJXDrBik4I']
+    vidsArr: ['r_Q40kOt9X0', 'uS57zn7vtyc','pwJXDrBik4I', '9ClYy0MxsU0']
   }
 
   
@@ -37,6 +36,8 @@ class App extends React.Component{
     })
   }
 
+
+
    //write a function here to only return the rooms associated with the current user will need to call this function in handleNewLogin and 
   // filterChannels=(roomsArr, userRooms)=>{
   //   roomsArr.filter(room => !userRooms.includes(room))
@@ -49,7 +50,8 @@ class App extends React.Component{
     .then(r => r.json())
     .then((currentUserObj) => {
       console.log(currentUserObj)
-      this.getPlaylist(currentUserObj.rooms[0].name)
+      // this.getPlaylist(currentUserObj.rooms[0].name)
+
       this.getVideo(currentUserObj.rooms[0].name)
       this.setState({
         currentUser: currentUserObj,
@@ -67,10 +69,12 @@ class App extends React.Component{
       part:'id',
       type: 'playlist',
       order: 'viewCount',
-      maxResults: 10
+      maxResults: 3
     }
-    let result =  searchYoutube( API_KEY,options);
+    let result =  searchYoutube( API_KEY, options);
     result.then((respObj) => {
+      
+      
 
       console.log("# of playlists found", respObj.items.length)
       if(respObj.items.length === 0){
@@ -94,8 +98,8 @@ class App extends React.Component{
       q: `new ${newChannelName} tracks`,
       part:'id',
       type: 'video',
-      maxResults: 2,
-      order: 'relevance',
+      maxResults: 5,
+      order:'relevance',
       videoDuration: 'short'
       }
     let result =  searchYoutube( API_KEY,options);
@@ -170,7 +174,8 @@ class App extends React.Component{
     //console.log(this.state.channels.filter(c => c.id == channelId ))
     const selectedChannel = this.state.channels.find(channelObj => channelObj.id == channelId)
     //console.log(selectedChannel)
-    this.getPlaylist(selectedChannel.name)
+    // this.getPlaylist(selectedChannel.name)
+    this.getVideo(selectedChannel.name)
     this.setState({
       currentChannel: selectedChannel
     })
@@ -231,6 +236,8 @@ class App extends React.Component{
     console.log("vids from state: ", this.state.vidsArr)
     const channelNames = this.state.channels.map(channelObj => channelObj.name)
     
+
+    
     // console.log(this.state.vidsArr)
     
     //conditional render for login/signup
@@ -261,7 +268,6 @@ class App extends React.Component{
             allChannels = {this.state.appChannels}
             displayNewChannel = {this.displayNewChannel}
             getVideo = {this.getVideo}
-            getPlaylist = {this.getPlaylist}
             onNewLogin = {this.handleNewLogin}
           /> 
 
@@ -274,6 +280,7 @@ class App extends React.Component{
             channel = {this.state.currentChannel.name} 
             vidsArr = {this.state.vidsArr}
             playlistId= {this.state.playlistId}
+            getPlaylist = {this.getPlaylist}
           />        
         </div>
       );

@@ -4,8 +4,6 @@ import Video from './Video'
 
 
 export default class Recommended extends Component {
-    
-
 
     render() {
         // console.log(" vids from recc:", this.props)
@@ -23,13 +21,13 @@ export default class Recommended extends Component {
                 </h1>
                     
                 <div className='player-wrapper'>
-                    <ReactPlayer 
+                    {/* <ReactPlayer 
                         className='react-player' 
                         url= {`https://www.youtube.com/playlist?list=${this.props.playlistId}`} 
                         playing = {false}   
                         controls 
                         width ={900} 
-                        height = {500} />
+                        height = {500} /> */}
                 </div>
                     {players}
 
