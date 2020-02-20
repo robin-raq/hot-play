@@ -1,5 +1,5 @@
 # hot-play
-interactive music sharing chat platform
+An interactive music sharing chat platform created with ruby on rails backend and react.js frontend
 
 ##Components
 
