@@ -1,5 +1,5 @@
 <h1 align='center'><b>
-🔥HotPlay 🔥</b></h1>  
+🔥 HotPlay 🔥</b></h1>  
 <p align='center'>
 A full stack <code>React.js</code>, <code>Ruby on Rails</code> web app aimed to provide
 an interactive music sharing chat platform as a social and convenient way of discovering new music.
