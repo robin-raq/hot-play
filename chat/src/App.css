@@ -48,6 +48,14 @@ img {
   
 }
 
+.wrapper {
+  /* overflow: scroll; */
+  /* padding-bottom: 1000px; */
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
 .sidebar {
   margin-right: 60px;
   min-width: 290px;
@@ -217,13 +225,18 @@ li {
 
 
   .glow {
-    font-size: 80px;
+    font-size: 100px;
     /* position: fixed; */
     color:pink;
     text-align: center;
     -webkit-animation: glow 1s ease-in-out infinite alternate;
     -moz-animation: glow 1s ease-in-out infinite alternate;
     animation: glow 1s ease-in-out infinite alternate;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    padding: 5px;
+    
   }
   
   @keyframes glow {
