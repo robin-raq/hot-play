@@ -11,7 +11,6 @@ export default class SignupPage extends Component {
     handleSubmit = (evt) =>{
         
         evt.preventDefault()
-        //this.props.onNewSignup(this.state)
         fetch(`http://localhost:3000/users`, {
             method:'POST',
             headers: { 
@@ -44,7 +43,7 @@ export default class SignupPage extends Component {
         return (
             <div className = "login">
             <h1 className="link dim black b f1 f-headline-ns tc db mb3 mb4-ns glow">Welcome to HotPlay</h1>
-                <h2 class="mt2 mb0 f4 fw4 ttu tc tracked"> 🔥 Discover, Listen, Connect 🔥</h2>
+                <h2 className="mt2 mb0 f4 fw4 ttu tc tracked"> 🔥 Discover, Listen, Connect 🔥</h2>
             <main className="pa4 black-80">
                 <form 
                     className = "measure center"

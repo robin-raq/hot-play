@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Message from './Message'
 import MessageForm from './MessageForm'
 import Tachyons from 'tachyons'
+import ScrollToBottom from 'react-scroll-to-bottom'
 
 export default class Chat extends Component {
 
@@ -10,15 +11,17 @@ export default class Chat extends Component {
         
         return (
             <div className = "chat-container">
-                <h1>
-                    {this.props.channel.name}
-                </h1>
-                <div className= 'chat ba b--dashed bw3'>
-                    {messages}
-                </div>
+                    <h1>
+                        {this.props.channel.name}
+                    </h1>
+            {/* <ScrollToBottom> */}
+                    <div className= 'chat ba b--dashed bw3'>
+                        {messages}
+                    </div>
                 <MessageForm  
                     onNewMessage = {this.props.onNewMessage}
                 />
+            {/* </ScrollToBottom> */}
             </div>
         )
     }

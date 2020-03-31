@@ -9,8 +9,8 @@ ReactDOM.render(
     
     <BrowserRouter>
         <ActionCableProvider 
-        url={API_WS_ROOT}>
+            url={API_WS_ROOT}>
             <App />
         </ActionCableProvider>
-        </BrowserRouter>
+    </BrowserRouter>
     , document.getElementById('root'))

@@ -19,6 +19,10 @@ export default class Recommended extends Component {
                 <h1 className= "mt2 mb0 f1 fw1 ttu tracked glow">
                     Hot Recs {this.props.channel} 
                 </h1>
+
+                <div className = "wrapper">
+                    {players}
+                </div>
                     
                 <div className='player-wrapper'>
                     {/* <ReactPlayer 
@@ -29,7 +33,6 @@ export default class Recommended extends Component {
                         width ={900} 
                         height = {500} /> */}
                 </div>
-                    {players}
 
             </div>   
         )

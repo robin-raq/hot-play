@@ -95,10 +95,10 @@ class App extends React.Component{
   getVideo = (newChannelName) => {
     const API_KEY = REACT_APP_YOUTUBE_API_KEY
     const options = {
-      q: `new ${newChannelName} tracks`,
+      q: `${newChannelName} music video`,
       part:'id',
       type: 'video',
-      maxResults: 5,
+      maxResults: 10,
       order:'relevance',
       videoDuration: 'short'
       }
