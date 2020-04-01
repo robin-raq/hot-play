@@ -5,9 +5,6 @@
 
 *:focus {outline:0;}
 
-/* body {
-  margin: 0;
-} */
 #root {
   max-width: 100vw;
   max-height: 100vh;
@@ -36,11 +33,10 @@ img {
 }
 
 .recommended {
-    
   width: 100%;
   text-align: center;
-  margin-left: 50px;
-  min-width: 200px;
+  margin-left: 5px;
+  /* min-width: 200px; */
   background: #0c0707;
   padding: 40px;
   color: white;
@@ -49,6 +45,7 @@ img {
 }
 
 .wrapper {
+  
   /* overflow: scroll; */
   /* padding-bottom: 1000px; */
   position: -webkit-sticky;
@@ -56,23 +53,36 @@ img {
   top: 0;
 }
 
-.sidebar {
-  margin-right: 60px;
-  min-width: 290px;
-  /* background-color: black; */
-  background: #525252;
-  padding: 30px;
-  color: white;
+.player-wrapper {
+  display: flex;
+  justify-content: center;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  /* position: relative; */
+  padding-top: 10.00% /* Player ratio: 100 / (1280 / 720) */
+}
+.react-player {
+  position: relative;  
 }
 
+.sidebar {
+  margin-right: 5px;
+  min-width: 290px;
+  background: #525252;
+  padding: 50px;
+  color: black;
+  overflow: scroll;
+}
+/* 
 .sidebar h1{
   font-size: 4em;
   font-stretch: ultra-expanded;
-}
-.profile h2 {
+} */
+.profile h3 {
   margin: 22px;
   align-self: left;
-  font-weight: 400;
+  font-weight: 200;
   font-style: italic;
 }
 
@@ -105,7 +115,7 @@ li {
 }
 
 .appChannels button {
-  height: 21px;
+  height: 20px;
   border: none;
   background: black;
   color: white;
@@ -114,7 +124,7 @@ li {
 }
 
 .cl button {
-  height: 21px;
+  height: 20px;
   border: none;
   background: black;
   color: white;
@@ -124,64 +134,81 @@ li {
 
 .message {
   display: flex;
-  margin: 20px 10px;
+  margin: 30px 20px;
 }
 
 .message img {
-  height: 100px;
-  width: 100px;
+  height:60px;
+  width: 60px;
 }
 
 .message .username {
-  font-size: 10px;
+  font-size: 20px;
   font-weight: bold;
   margin: 0;
   font-style: italic;
 }
 
 .message .text {
-  font-size: 30px;
+  font-size: 20px;
   margin: 5px 10px;
-  font-weight: 100;
+  font-weight: 200;
 }
 .chat-container{
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  /* padding: 10px 10px 10px 10px; */
-  width: 40vw;
-  height: 99vh;
+  display: inline-grid;
+  grid-template-rows: 8% 42% 50%;
+  margin-bottom: -200px;
+  overflow: hidden;
+
+  /* display: flex; */
+  /* justify-content: center; */
+  /* flex-direction: column; */
+  
+  /* width: 40vw;
+  height: 99vh; */
   /* position: fixed; */
 }
+.chat-title{
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  font-size: 3em;
+  margin: 0.5em 0;
+  
+}
 .chat {
-  width: 100%;
-  height: 75%;
+  width: 40%;
+  height: 70%;
   overflow: scroll;
-  /* position: fixed; */
+  /* position: relative; */
+  /* position: -webkit-sticky; */
+  position: fixed;
+  /* top: 500px; */
 }
 .chat-container h1{
   font-size: 4em;
-  margin: 0.67em 0;
+  margin: 0.5em 0;
   /* position: fixed; */
 }
 
 .chat-container form {
   /* position: relative; */
   bottom: 0;
-  margin: 40px 76px;
-  width: 80%;
-  height: 10%;
+  margin: 10px 10px 10px 10px;
+  width: 30%;
+  height: 12%;
   border: 1px solid;
-  padding: 42px;
+  /* padding: 50px; */
   border-radius: 10px;
-  /* position: fixed; */
+  position: fixed;
 }
 
 .chat input[type="text"] {
-  width: 80%;
+  width: 60%;
   border: 0;
   font-size: 20px;
   margin-left: 10px;
+  margin-bottom: 25px;
 }
 
 .chat input[type="submit"] {
@@ -207,25 +234,14 @@ li {
 
   
 
-  .player-wrapper {
-    display: flex;
-    justify-content: center;
-   
-    position: relative;
-    padding-top: 10.00% /* Player ratio: 100 / (1280 / 720) */
-  }
-  .react-player {
-    position: relative;
-    
-    
-  }
+ 
   .center{
     margin-top: 92px;
   }
 
 
   .glow {
-    font-size: 100px;
+    font-size: 40px;
     /* position: fixed; */
     color:pink;
     text-align: center;

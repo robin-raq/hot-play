@@ -71,7 +71,7 @@ export default class ChannelList extends Component {
         ))
         
         return (
-            <div className="cl ba b--dotted bw1">
+            <div className="cl">
                 
                 <Cable 
                     channels={this.props.channels}

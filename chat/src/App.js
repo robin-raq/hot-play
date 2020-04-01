@@ -100,7 +100,8 @@ class App extends React.Component{
       type: 'video',
       maxResults: 10,
       order:'relevance',
-      videoDuration: 'short'
+      videoDuration: 'short',
+      videoCategoryId: 10
       }
     let result =  searchYoutube( API_KEY,options);
     result.then((respObj) => {

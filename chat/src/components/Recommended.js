@@ -10,10 +10,11 @@ export default class Recommended extends Component {
         const players = this.props.vidsArr.map(videoId => <div className='player-wrapper'><ReactPlayer 
             className='react-player' 
             url= {`https://www.youtube.com/watch?v=${videoId}`}
+            youtubeConfig={{ playerVars: { showinfo: 1 } }}
             playing = {false}   
             controls 
-            width ={900} 
-            height = {500} /></div>)
+            width ={800} 
+            height = {400} /></div>)
         return(
             <div className = "recommended">
                 <h1 className= "mt2 mb0 f1 fw1 ttu tracked glow">

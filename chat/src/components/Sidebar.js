@@ -18,18 +18,9 @@ class Sidebar extends React.Component{
         return(
             
             <div className = 'sidebar'>
-                <Link to= '/Login' refresh="true">
-                    <button 
-                        className="f6 link grow ttu db bg-black white logout" 
-                        onClick={this.handleClick}
-                    >
-                        Logout
-                    </button>
-                    <br></br>
-                    
-                </Link>
                 
-                <h1>🔥HotPlay</h1> 
+                {/* <h1>HotPlay</h1>  */}
+                
             
 
                 <Profile 
@@ -53,6 +44,17 @@ class Sidebar extends React.Component{
                     onJoinChannel = {this.props.onNewChannel}
                     channels = {this.props.channels}
                 />
+
+                <Link to= '/Login' refresh="true">
+                    <button 
+                        className="f6 link grow ttu db bg-black white logout" 
+                        onClick={this.handleClick}
+                    >
+                        Logout
+                    </button>
+                    <br></br>
+                    
+                </Link>
 
             </div>
         )
