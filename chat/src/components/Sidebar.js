@@ -15,7 +15,7 @@ class Sidebar extends React.Component {
     console.log("current user: ", this.props.user);
     return (
       <div className="sidebar bg-light-yellow">
-        <h1 className="glow">HotPlay</h1>
+        {/* <h1 className="glow">HotPlay</h1> */}
 
         <Profile
           username={this.props.user.username}
@@ -31,6 +31,7 @@ class Sidebar extends React.Component {
           displayNewMessage={this.props.displayNewMessage}
           getVideo={this.props.getVideo}
         />
+        <hr></hr>
 
         <AppChannels
           allChannels={this.props.allChannels}
