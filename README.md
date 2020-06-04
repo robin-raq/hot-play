@@ -72,9 +72,9 @@ Frontend Installation:
 
 -   Ensure your Backend API is running at `http://localhost:3000/`
 
--   create a config.keys file inside src folder initialze and export a const REACT_APP_YOUTUBE_API_KEY = `YOUR_API_KEY_HERE`
+-   Create a config.keys.js file inside src folder initialze and export a const REACT_APP_YOUTUBE_API_KEY = `YOUR_API_KEY_HERE`
 
--   add config.keys file to your .gitignore
+-   Add the config.keys file to your .gitignore
 
 -   run `npm install && npm start` to run dependencies and start server
 
