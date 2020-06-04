@@ -88,7 +88,7 @@ Frontend Installation:
         - MessageList
         - MessageForm
     - RecommendationBoard
-        - Videos List
+        - VideosList
     
 
 
