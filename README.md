@@ -71,7 +71,10 @@ Frontend Installation:
 -   `cd` to `hotplay/chat`
 
 -   Ensure your Backend API is running at `http://localhost:3000/`
--   run npm install to install all dependencies
+
+-   create a config.keys file inside src folder initialze and export a const REACT_APP_YOUTUBE_API_KEY = `YOUR_API_KEY_HERE`
+
+-   add config.keys file to your .gitignore
 
 -   run `npm install && npm start` to run dependencies and start server
 
