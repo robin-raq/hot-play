@@ -34,7 +34,8 @@ This web app makes use of the following:
 -   [PostgreSQL >= 0.18, < 2.0](https://www.postgresql.org/) - Database
 -   [bcrypt ~>3.1.7](https://github.com/codahale/bcrypt-ruby) - Rails gem for encryption and securing user passwords
 -   [Active Model Serializers](https://github.com/rails-api/active_model_serializers) - Serializing API routes to JSON
-
+-   [redis ~> 4.0](https://github.com/redis/redis-rb) - Rails adapter to run Action Cable in production
+-   [Action Cable](https://github.com/rails/rails/tree/master/actioncable) - Integrated Websockets for Rails
 
 
 **Front End**
@@ -87,5 +88,7 @@ Frontend Installation:
         - MessageList
         - MessageForm
     - RecommendationBoard
+        - Videos List
+    
 
 
